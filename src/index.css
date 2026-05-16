@@ -34,12 +34,12 @@
   --bg-page: #0D0D0D;
   --bg-card: #151515;
   --bg-card-alt: #1a1a1a;
-  --text-main: #F2EFE8;
+  --text-main: #E2DFD8; /* Softer text for reduced eye strain */
   --text-invert: #0D0D0D;
-  --text-muted: #aaaaaa;
-  --text-dim: #777777;
-  --border-color: #F2EFE8;
-  --shadow-color: #F2EFE8;
+  --text-muted: #999999;
+  --text-dim: #666666;
+  --border-color: #444444; /* Darker border so the neon shadow pops */
+  --shadow-color: var(--flat-cobalt); /* Vibrant colored shadow in dark mode */
 }
 
 

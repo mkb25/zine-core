@@ -31,8 +31,76 @@ function QSCopy({ code }) {
   )
 }
 
-export default function HomePage() {
+function HeroSection() {
   const navigate = useNavigate()
+  return (
+    <section className="home-hero">
+      <div className="home-hero-inner">
+        <div className="home-hero-stamp">// component library</div>
+        <h1 className="home-hero-title">
+          ZINE<em>—</em>CORE
+        </h1>
+        <p className="home-hero-sub">
+          A neo-brutalist React component library built for designers who reject polish.
+          Raw edges. Acid color. Zero apology.
+        </p>
+        <div className="home-hero-ctas">
+          <button className="zn-btn zn-btn--primary" style={{ fontSize: '1rem', padding: '1rem 2.5rem' }} onClick={() => navigate('/components')}>
+            Browse Components →
+          </button>
+          <button className="zn-btn zn-btn--secondary" style={{ fontSize: '1rem', padding: '1rem 2.5rem' }} onClick={() => navigate('/docs')}>
+            Read Docs
+          </button>
+        </div>
+      </div>
+
+      {/* decorative preview strip */}
+      <div className="home-hero-preview">
+        {PREVIEW_ITEMS.map((item, i) => (
+          <div key={i} className="home-preview-chip">
+            <span className="home-preview-label">{item.label}</span>
+            {item.el}
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function StatsBar() {
+  return (
+    <div className="home-stats-bar">
+      <div className="home-stat-item"><strong>21</strong> Components</div>
+      <div className="home-stat-item"><strong>0</strong> npm dependencies</div>
+      <div className="home-stat-item"><strong>1</strong> CSS file</div>
+      <div className="home-stat-item"><strong>100%</strong> Copy-paste</div>
+    </div>
+  )
+}
+
+function PhilosophySection() {
+  return (
+    <section className="home-philosophy">
+      <div className="home-philosophy-inner">
+        <div className="phil-label">// Philosophy</div>
+        <h2 className="phil-title">What is a <span className="highlight">Zine</span>?</h2>
+        <div className="phil-content">
+          <p>
+            A <strong>zine</strong> (derived from fanzine) is a self-published, small-circulation work of original or appropriated texts and images. 
+            It’s the original DIY medium—born from Xerox machines, glue sticks, and a total disregard for "proper" layout.
+          </p>
+          <p>
+            <strong>ZINE-CORE</strong> is a tribute to that energy. It rejects the polished, rounded, soft-shadowed aesthetic of modern SaaS. 
+            It’s built for the web that still wants to feel physical, stamped, and raw.
+          </p>
+        </div>
+        <div className="phil-stamp">EST. 2024</div>
+      </div>
+    </section>
+  )
+}
+
+function FeaturesSection() {
   const featRef = useRef(null)
 
   useEffect(() => {
@@ -46,98 +114,40 @@ export default function HomePage() {
   }, [])
 
   return (
-    <div className="home-page">
-
-      {/* ── Hero ── */}
-      <section className="home-hero">
-        <div className="home-hero-inner">
-          <div className="home-hero-stamp">// component library</div>
-          <h1 className="home-hero-title">
-            ZINE<em>—</em>CORE
-          </h1>
-          <p className="home-hero-sub">
-            A neo-brutalist React component library built for designers who reject polish.
-            Raw edges. Acid color. Zero apology.
-          </p>
-          <div className="home-hero-ctas">
-            <button className="zn-btn zn-btn--primary" style={{ fontSize: '1rem', padding: '1rem 2.5rem' }} onClick={() => navigate('/components')}>
-              Browse Components →
-            </button>
-            <button className="zn-btn zn-btn--secondary" style={{ fontSize: '1rem', padding: '1rem 2.5rem' }} onClick={() => navigate('/docs')}>
-              Read Docs
-            </button>
+    <section className="home-section" ref={featRef}>
+      <h2 className="home-section-title">Why Zine-Core?</h2>
+      <p className="home-section-sub">Because polished SaaS components make everything look the same. This doesn't.</p>
+      <div className="feat-grid">
+        {FEATURES.map((f, i) => (
+          <div key={i} className="feat-card" style={{ animationDelay: `${i * 0.07}s` }}>
+            <div className="feat-icon">{f.icon}</div>
+            <div className="feat-title">{f.title}</div>
+            <div className="feat-desc">{f.desc}</div>
           </div>
-        </div>
-
-        {/* decorative preview strip */}
-        <div className="home-hero-preview">
-          {PREVIEW_ITEMS.map((item, i) => (
-            <div key={i} className="home-preview-chip">
-              <span className="home-preview-label">{item.label}</span>
-              {item.el}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Stats bar ── */}
-      <div className="home-stats-bar">
-        <div className="home-stat-item"><strong>21</strong> Components</div>
-        <div className="home-stat-item"><strong>0</strong> npm dependencies</div>
-        <div className="home-stat-item"><strong>1</strong> CSS file</div>
-        <div className="home-stat-item"><strong>100%</strong> Copy-paste</div>
+        ))}
       </div>
+    </section>
+  )
+}
 
-      {/* ── Philosophy ── */}
-      <section className="home-philosophy">
-        <div className="home-philosophy-inner">
-          <div className="phil-label">// Philosophy</div>
-          <h2 className="phil-title">What is a <span className="highlight">Zine</span>?</h2>
-          <div className="phil-content">
-            <p>
-              A <strong>zine</strong> (derived from fanzine) is a self-published, small-circulation work of original or appropriated texts and images. 
-              It’s the original DIY medium—born from Xerox machines, glue sticks, and a total disregard for "proper" layout.
-            </p>
-            <p>
-              <strong>ZINE-CORE</strong> is a tribute to that energy. It rejects the polished, rounded, soft-shadowed aesthetic of modern SaaS. 
-              It’s built for the web that still wants to feel physical, stamped, and raw.
-            </p>
+function QuickStartSection() {
+  const navigate = useNavigate()
+  return (
+    <section className="home-section home-section--dark">
+      <h2 className="home-section-title" style={{ color: 'var(--acid-yellow)' }}>Quick Start</h2>
+      <p className="home-section-sub" style={{ color: '#aaa' }}>Three steps and you're stamping components.</p>
+      <div className="qs-steps">
+        <div className="qs-step">
+          <div className="qs-num">01</div>
+          <div className="qs-body">
+            <div className="qs-step-title">Add the fonts <QSCopy code={`<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">`} /></div>
+            <pre className="qs-code">{`<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">`}</pre>
           </div>
-          <div className="phil-stamp">EST. 2024</div>
         </div>
-      </section>
-
-      {/* ── Features ── */}
-      <section className="home-section" ref={featRef}>
-        <h2 className="home-section-title">Why Zine-Core?</h2>
-        <p className="home-section-sub">Because polished SaaS components make everything look the same. This doesn't.</p>
-        <div className="feat-grid">
-          {FEATURES.map((f, i) => (
-            <div key={i} className="feat-card" style={{ animationDelay: `${i * 0.07}s` }}>
-              <div className="feat-icon">{f.icon}</div>
-              <div className="feat-title">{f.title}</div>
-              <div className="feat-desc">{f.desc}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Quick start ── */}
-      <section className="home-section home-section--dark">
-        <h2 className="home-section-title" style={{ color: 'var(--acid-yellow)' }}>Quick Start</h2>
-        <p className="home-section-sub" style={{ color: '#aaa' }}>Three steps and you're stamping components.</p>
-        <div className="qs-steps">
-          <div className="qs-step">
-            <div className="qs-num">01</div>
-            <div className="qs-body">
-              <div className="qs-step-title">Add the fonts <QSCopy code={`<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">`} /></div>
-              <pre className="qs-code">{`<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">`}</pre>
-            </div>
-          </div>
-          <div className="qs-step">
-            <div className="qs-num">02</div>
-            <div className="qs-body">
-              <div className="qs-step-title">Copy the CSS variables <QSCopy code={`:root {
+        <div className="qs-step">
+          <div className="qs-num">02</div>
+          <div className="qs-body">
+            <div className="qs-step-title">Copy the CSS variables <QSCopy code={`:root {
   --acid-yellow: #F5F500;
   --electric-coral: #FF3D3D;
   --flat-cobalt: #1A1AFF;
@@ -145,7 +155,7 @@ export default function HomePage() {
   --border: 3px solid var(--near-black);
   --shadow: 6px 6px 0px var(--near-black);
 }`} /></div>
-              <pre className="qs-code">{`:root {
+            <pre className="qs-code">{`:root {
   --acid-yellow: #F5F500;
   --electric-coral: #FF3D3D;
   --flat-cobalt: #1A1AFF;
@@ -153,31 +163,52 @@ export default function HomePage() {
   --border: 3px solid var(--near-black);
   --shadow: 6px 6px 0px var(--near-black);
 }`}</pre>
-            </div>
           </div>
-          <div className="qs-step">
-            <div className="qs-num">03</div>
-            <div className="qs-body">
-              <div className="qs-step-title">Pick a component &amp; paste <QSCopy code={`<button className="zn-btn zn-btn--primary">
+        </div>
+        <div className="qs-step">
+          <div className="qs-num">03</div>
+          <div className="qs-body">
+            <div className="qs-step-title">Pick a component &amp; paste <QSCopy code={`<button className="zn-btn zn-btn--primary">
   Stamp It
 </button>`} /></div>
-              <pre className="qs-code">{`<button className="zn-btn zn-btn--primary">
+            <pre className="qs-code">{`<button className="zn-btn zn-btn--primary">
   Stamp It
 </button>`}</pre>
-            </div>
           </div>
         </div>
-        <div style={{ marginTop: '2.5rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-          <button className="zn-btn zn-btn--primary" onClick={() => navigate('/docs')}>Full Setup Guide →</button>
-          <button className="zn-btn zn-btn--secondary" style={{ color: '#fff', borderColor: '#fff' }} onClick={() => navigate('/components')}>Browse All 21 Components</button>
-        </div>
-      </section>
+      </div>
+      <div style={{ marginTop: '2.5rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+        <button className="zn-btn zn-btn--primary" onClick={() => navigate('/docs')}>Full Setup Guide →</button>
+        <button className="zn-btn zn-btn--secondary" style={{ color: '#fff', borderColor: '#fff' }} onClick={() => navigate('/components')}>Browse All 21 Components</button>
+      </div>
+    </section>
+  )
+}
 
-      {/* ── Footer ── */}
-      <footer className="home-footer">
-        <span>ZINE<em>—</em>CORE</span>
-        <span>// v1.0.0 — built raw, not polished</span>
-      </footer>
+function Footer() {
+  return (
+    <footer className="home-footer">
+      <span style={{ flex: 1 }}>ZINE<em>—</em>CORE</span>
+      <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', fontFamily: 'var(--font-mono)' }}>
+        Created by 
+        <a href="https://github.com/mkb25" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', color: 'inherit', textDecoration: 'none' }}>
+          <img src="https://github.com/mkb25.png" alt="mkb25 GitHub" style={{ width: '1.5rem', height: '1.5rem', border: '1px solid var(--near-black)', borderRadius: '50%', objectFit: 'cover' }} />
+        </a>
+      </span>
+      <span style={{ flex: 1, textAlign: 'right' }}>// v1.0.0 — built raw, not polished</span>
+    </footer>
+  )
+}
+
+export default function HomePage() {
+  return (
+    <div className="home-page">
+      <HeroSection />
+      <StatsBar />
+      <PhilosophySection />
+      <FeaturesSection />
+      <QuickStartSection />
+      <Footer />
     </div>
   )
 }
