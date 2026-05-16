@@ -137,10 +137,14 @@ export default function HomePage() {
           <div className="qs-step">
             <div className="qs-num">02</div>
             <div className="qs-body">
-              <div className="qs-step-title">Add the stylesheet <QSCopy code={`<link rel="stylesheet" href="https://zine-core.onrender.com/styles.css">`} /></div>
-              <p className="qs-step-sub" style={{ color: '#888', fontSize: '0.8rem', marginBottom: '0.5rem' }}>Link the hosted CSS directly (Fastest):</p>
-              <pre className="qs-code">{`<link rel="stylesheet" href="https://zine-core.onrender.com/styles.css">`}</pre>
-              <p className="qs-step-sub" style={{ color: '#888', fontSize: '0.8rem', marginTop: '1rem', marginBottom: '0.5rem' }}>Or copy the variables to your local CSS (Customisable):</p>
+              <div className="qs-step-title">Copy the CSS variables <QSCopy code={`:root {
+  --acid-yellow: #F5F500;
+  --electric-coral: #FF3D3D;
+  --flat-cobalt: #1A1AFF;
+  --near-black: #0D0D0D;
+  --border: 3px solid var(--near-black);
+  --shadow: 6px 6px 0px var(--near-black);
+}`} /></div>
               <pre className="qs-code">{`:root {
   --acid-yellow: #F5F500;
   --electric-coral: #FF3D3D;

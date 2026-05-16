@@ -1,8 +1,7 @@
 {
   "name": "zine-core",
   "private": true,
-  "version": "1.0.0",
-  "homepage": "https://zine-core.onrender.com",
+  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",

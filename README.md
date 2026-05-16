@@ -4,6 +4,8 @@
 
 *Raw, hand-stamped energy meets digital punk. Thick borders, acid colors, and intentional misalignment.*
 
+[**Live Demo & Documentation →**](https://zine-core.onrender.com/)
+
 ## 📖 Philosophy
 
 ZINE-CORE is a rebellion against overly-polished, generic modern web design. It embraces the aesthetics of neo-brutalism: high contrast, unrefined typography, stark black borders, and vibrant colors. It's built for developers who want their interfaces to scream, not whisper. 
@@ -33,8 +35,6 @@ cd zine-core
 npm install
 ```
 
-Live Demo: [https://zine-core.onrender.com](https://zine-core.onrender.com)
-
 ### Local Development
 
 Start the Vite development server:
@@ -43,7 +43,7 @@ Start the Vite development server:
 npm run dev
 ```
 
-The documentation and living styleguide will be available locally at `http://localhost:5173`.
+The documentation and living styleguide will be available at `http://localhost:5173` (local) or [zine-core.onrender.com](https://zine-core.onrender.com/) (live).
 
 ### Build for Production
 
