@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const FEATURES = [
@@ -16,6 +16,20 @@ const PREVIEW_ITEMS = [
   { label: 'Badge',          el: <span className="zn-badge zn-badge--yellow">NEW</span> },
   { label: 'Cobalt Badge',   el: <span className="zn-badge zn-badge--cobalt">v2.0</span> },
 ]
+
+function QSCopy({ code }) {
+  const [copied, setCopied] = useState(false)
+  const handleCopy = () => {
+    navigator.clipboard.writeText(code)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1500)
+  }
+  return (
+    <button className={`qs-copy-btn${copied ? ' copied' : ''}`} onClick={handleCopy}>
+      {copied ? '✓' : 'copy'}
+    </button>
+  )
+}
 
 export default function HomePage() {
   const navigate = useNavigate()
@@ -74,6 +88,25 @@ export default function HomePage() {
         <div className="home-stat-item"><strong>100%</strong> Copy-paste</div>
       </div>
 
+      {/* ── Philosophy ── */}
+      <section className="home-philosophy">
+        <div className="home-philosophy-inner">
+          <div className="phil-label">// Philosophy</div>
+          <h2 className="phil-title">What is a <span className="highlight">Zine</span>?</h2>
+          <div className="phil-content">
+            <p>
+              A <strong>zine</strong> (derived from fanzine) is a self-published, small-circulation work of original or appropriated texts and images. 
+              It’s the original DIY medium—born from Xerox machines, glue sticks, and a total disregard for "proper" layout.
+            </p>
+            <p>
+              <strong>ZINE-CORE</strong> is a tribute to that energy. It rejects the polished, rounded, soft-shadowed aesthetic of modern SaaS. 
+              It’s built for the web that still wants to feel physical, stamped, and raw.
+            </p>
+          </div>
+          <div className="phil-stamp">EST. 2024</div>
+        </div>
+      </section>
+
       {/* ── Features ── */}
       <section className="home-section" ref={featRef}>
         <h2 className="home-section-title">Why Zine-Core?</h2>
@@ -97,14 +130,21 @@ export default function HomePage() {
           <div className="qs-step">
             <div className="qs-num">01</div>
             <div className="qs-body">
-              <div className="qs-step-title">Add the fonts</div>
+              <div className="qs-step-title">Add the fonts <QSCopy code={`<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">`} /></div>
               <pre className="qs-code">{`<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">`}</pre>
             </div>
           </div>
           <div className="qs-step">
             <div className="qs-num">02</div>
             <div className="qs-body">
-              <div className="qs-step-title">Copy the CSS variables</div>
+              <div className="qs-step-title">Copy the CSS variables <QSCopy code={`:root {
+  --acid-yellow: #F5F500;
+  --electric-coral: #FF3D3D;
+  --flat-cobalt: #1A1AFF;
+  --near-black: #0D0D0D;
+  --border: 3px solid var(--near-black);
+  --shadow: 6px 6px 0px var(--near-black);
+}`} /></div>
               <pre className="qs-code">{`:root {
   --acid-yellow: #F5F500;
   --electric-coral: #FF3D3D;
@@ -118,7 +158,9 @@ export default function HomePage() {
           <div className="qs-step">
             <div className="qs-num">03</div>
             <div className="qs-body">
-              <div className="qs-step-title">Pick a component &amp; paste</div>
+              <div className="qs-step-title">Pick a component &amp; paste <QSCopy code={`<button className="zn-btn zn-btn--primary">
+  Stamp It
+</button>`} /></div>
               <pre className="qs-code">{`<button className="zn-btn zn-btn--primary">
   Stamp It
 </button>`}</pre>
