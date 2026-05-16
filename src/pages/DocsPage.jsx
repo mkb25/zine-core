@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const CLASSES = [
@@ -23,9 +24,20 @@ const CLASSES = [
   ['zn-key--coral', 'Coral kbd key'],
 ]
 
-function CodeBlock({ code, lang = '' }) {
+function CodeBlock({ code }) {
+  const [copied, setCopied] = useState(false)
+  const handleCopy = () => {
+    navigator.clipboard.writeText(code)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1500)
+  }
   return (
-    <pre className="docs-code"><code>{code}</code></pre>
+    <div className="docs-code-wrap">
+      <button className={`docs-copy-btn${copied ? ' copied' : ''}`} onClick={handleCopy}>
+        {copied ? '✓ copied' : 'copy'}
+      </button>
+      <pre className="docs-code"><code>{code}</code></pre>
+    </div>
   )
 }
 
@@ -38,6 +50,7 @@ export default function DocsPage() {
         <div className="docs-sidebar-title">// Docs</div>
         {[
           ['#install', 'Installation'],
+          ['#cdn', 'CDN / Link Tag'],
           ['#fonts', 'Fonts Setup'],
           ['#css-vars', 'CSS Variables'],
           ['#usage', 'Basic Usage'],
@@ -71,9 +84,17 @@ npm run dev`} />
           <CodeBlock code={`npm install react-router-dom`} />
         </section>
 
+        {/* CDN / STANDALONE */}
+        <section className="docs-section" id="cdn">
+          <h2 className="docs-h2">02 — CDN / Standalone CSS</h2>
+          <p>For the fastest integration, skip the setup and link the hosted stylesheet directly in your <code>&lt;head&gt;</code>:</p>
+          <CodeBlock code={`<link rel="stylesheet" href="https://inkui.netlify.app/styles.css">`} />
+          <p>This includes all design tokens (colors, fonts, borders) and component classes (<code>.zn-*</code>). Note: You still need to include the Google Fonts link below for the typography to work.</p>
+        </section>
+
         {/* FONTS */}
         <section className="docs-section" id="fonts">
-          <h2 className="docs-h2">02 — Fonts Setup</h2>
+          <h2 className="docs-h2">03 — Fonts Setup</h2>
           <p>Add both fonts to your <code>index.html</code> <code>{'<head>'}</code>:</p>
           <CodeBlock code={`<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -85,7 +106,7 @@ npm run dev`} />
 
         {/* CSS VARIABLES */}
         <section className="docs-section" id="css-vars">
-          <h2 className="docs-h2">03 — CSS Variables</h2>
+          <h2 className="docs-h2">04 — CSS Variables</h2>
           <p>Paste these into your <code>index.css</code> or global stylesheet. All component styles depend on them:</p>
           <CodeBlock code={`:root {
   --acid-yellow:    #F5F500;
@@ -107,7 +128,7 @@ npm run dev`} />
 
         {/* BASIC USAGE */}
         <section className="docs-section" id="usage">
-          <h2 className="docs-h2">04 — Basic Usage</h2>
+          <h2 className="docs-h2">05 — Basic Usage</h2>
           <p>Every component in the library has a <strong>{'< copy />'}</strong> button. Click it, paste the JSX, copy the matching CSS classes from <code>index.css</code>.</p>
 
           <h3 className="docs-h3">Button</h3>
@@ -155,7 +176,7 @@ npm run dev`} />
 
         {/* INTEGRATION */}
         <section className="docs-section" id="integration">
-          <h2 className="docs-h2">05 — Integration Patterns</h2>
+          <h2 className="docs-h2">06 — Integration Patterns</h2>
 
           <h3 className="docs-h3">New Vite project (recommended)</h3>
           <CodeBlock code={`# 1. Scaffold
@@ -194,7 +215,7 @@ import './zine-core.css'
 
         {/* CLASS REFERENCE */}
         <section className="docs-section" id="class-ref">
-          <h2 className="docs-h2">06 — Class Reference</h2>
+          <h2 className="docs-h2">07 — Class Reference</h2>
           <div className="docs-table-wrap">
             <table className="docs-table">
               <thead>
@@ -214,7 +235,7 @@ import './zine-core.css'
 
         {/* CUSTOMISE */}
         <section className="docs-section" id="customise">
-          <h2 className="docs-h2">07 — Customisation</h2>
+          <h2 className="docs-h2">08 — Customisation</h2>
           <p>Override any design token in <code>:root</code> to retheme the entire library instantly:</p>
           <CodeBlock code={`/* Example: muted palette */
 :root {
