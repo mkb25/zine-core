@@ -33,6 +33,8 @@ cd zine-core
 npm install
 ```
 
+Live Demo: [https://zine-core.onrender.com](https://zine-core.onrender.com)
+
 ### Local Development
 
 Start the Vite development server:
@@ -41,7 +43,7 @@ Start the Vite development server:
 npm run dev
 ```
 
-The documentation and living styleguide will be available at `http://localhost:5173`.
+The documentation and living styleguide will be available locally at `http://localhost:5173`.
 
 ### Build for Production
 

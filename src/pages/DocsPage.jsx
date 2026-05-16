@@ -88,7 +88,7 @@ npm run dev`} />
         <section className="docs-section" id="cdn">
           <h2 className="docs-h2">02 — CDN / Standalone CSS</h2>
           <p>For the fastest integration, skip the setup and link the hosted stylesheet directly in your <code>&lt;head&gt;</code>:</p>
-          <CodeBlock code={`<link rel="stylesheet" href="https://inkui.netlify.app/styles.css">`} />
+          <CodeBlock code={`<link rel="stylesheet" href="https://zine-core.onrender.com/styles.css">`} />
           <p>This includes all design tokens (colors, fonts, borders) and component classes (<code>.zn-*</code>). Note: You still need to include the Google Fonts link below for the typography to work.</p>
         </section>
 
