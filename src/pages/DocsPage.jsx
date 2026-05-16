@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const CLASSES = [
@@ -43,22 +43,66 @@ function CodeBlock({ code }) {
 
 export default function DocsPage() {
   const navigate = useNavigate()
+  const [theme, setTheme] = useState(localStorage.getItem('docs-theme') || 'light')
+  const [activeSection, setActiveSection] = useState('install')
+
+  useEffect(()=>{
+    const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)setActiveSection(e.target.id)}),{rootMargin:'-20% 0px -60% 0px',threshold:0})
+    document.querySelectorAll('.docs-section').forEach(s=>obs.observe(s))
+    return ()=>obs.disconnect()
+  },[])
+
+  const handleNavClick = useCallback((id) => {
+    setActiveSection(id)
+  }, [])
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light'
+    setTheme(newTheme)
+    localStorage.setItem('docs-theme', newTheme)
+  }
 
   return (
-    <div className="docs-page">
+    <div className="docs-page" data-theme={theme}>
       <aside className="docs-sidebar">
         <div className="docs-sidebar-title">// Docs</div>
+        
+        <button 
+          onClick={toggleTheme} 
+          className="zn-btn" 
+          style={{ 
+            width: '100%', 
+            fontSize: '0.65rem', 
+            marginBottom: '1rem',
+            padding: '0.5rem',
+            background: theme === 'light' ? 'var(--near-black)' : 'var(--acid-yellow)',
+            color: theme === 'light' ? 'var(--off-white)' : 'var(--near-black)',
+            transform: 'rotate(-1deg)',
+            borderRadius: '0',
+            boxShadow: theme === 'light' ? '3px 3px 0 var(--flat-cobalt)' : '3px 3px 0 var(--electric-coral)'
+          }}
+        >
+          {theme === 'light' ? '☾ DARK MODE' : '☼ LIGHT MODE'}
+        </button>
+
         {[
-          ['#install', 'Installation'],
-          ['#cdn', 'CDN / Link Tag'],
-          ['#fonts', 'Fonts Setup'],
-          ['#css-vars', 'CSS Variables'],
-          ['#usage', 'Basic Usage'],
-          ['#integration', 'Integration'],
-          ['#class-ref', 'Class Reference'],
-          ['#customise', 'Customisation'],
-        ].map(([href, label]) => (
-          <a key={href} href={href} className="docs-nav-link">{label}</a>
+          ['install', 'Installation'],
+          ['cdn', 'CDN / Link Tag'],
+          ['fonts', 'Fonts Setup'],
+          ['css-vars', 'CSS Variables'],
+          ['usage', 'Basic Usage'],
+          ['integration', 'Integration'],
+          ['class-ref', 'Class Reference'],
+          ['customise', 'Customisation'],
+        ].map(([id, label]) => (
+          <a 
+            key={id} 
+            href={`#${id}`} 
+            className={`docs-nav-link${activeSection === id ? ' active' : ''}`}
+            onClick={() => handleNavClick(id)}
+          >
+            {label}
+          </a>
         ))}
         <button className="zn-btn zn-btn--primary" style={{ marginTop: '1.5rem', width: '100%', fontSize: '0.75rem' }} onClick={() => navigate('/components')}>
           Components →

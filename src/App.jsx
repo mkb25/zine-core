@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router
 import HomePage from './pages/HomePage'
 import DocsPage from './pages/DocsPage'
 import ComponentsPage from './pages/ComponentsPage'
+import ScrollToTopButton from './components/ScrollToTopButton'
 
 function TopNav() {
   const navigate = useNavigate()
@@ -23,7 +24,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <TopNav />
+      <ScrollToTopButton />
       <div className="page-wrapper">
+
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/components" element={<ComponentsPage />} />

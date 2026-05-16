@@ -102,15 +102,15 @@ function CardsSection() {
   )
 }
 
-function ToggleSection() {
-  const [c1,setC1]=useState(true); const [c2,setC2]=useState(false)
+function ToggleSection({ theme, toggleTheme }) {
+  const [c1,setC1]=useState(true)
   const [s1,setS1]=useState(false); const [s2,setS2]=useState(true)
   return (
     <Section id="toggles" title="Toggles" desc="Chunky checkboxes and switches. Yellow floods on active." code={`<input type="checkbox" className="zn-checkbox" />`}>
       <p className="preview-label">Checkbox</p>
       <div className="preview-row">
         <label className="zn-toggle-wrap"><input type="checkbox" className="zn-checkbox" checked={c1} onChange={()=>setC1(!c1)} /><span>Notifications</span></label>
-        <label className="zn-toggle-wrap"><input type="checkbox" className="zn-checkbox" checked={c2} onChange={()=>setC2(!c2)} /><span>Dark mode</span></label>
+        <label className="zn-toggle-wrap"><input type="checkbox" className="zn-checkbox" checked={theme === 'dark'} onChange={toggleTheme} /><span>Dark mode</span></label>
       </div>
       <p className="preview-label">Switch</p>
       <div className="preview-row">
@@ -351,10 +351,15 @@ const NAV_ITEMS = [
 export default function ComponentsPage() {
   const [sidebarOpen,setSidebarOpen]=useState(false)
   const [activeSection,setActiveSection]=useState('buttons')
-  const [showTop,setShowTop]=useState(false)
+  const [theme, setTheme] = useState(localStorage.getItem('docs-theme') || 'light')
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light'
+    setTheme(newTheme)
+    localStorage.setItem('docs-theme', newTheme)
+  }
 
   const handleNavClick=useCallback((id)=>{setActiveSection(id);setSidebarOpen(false)},[])
-  const scrollToTop=useCallback(()=>window.scrollTo({top:0,behavior:'smooth'}),[])
 
   useEffect(()=>{
     const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)setActiveSection(e.target.id)}),{rootMargin:'-20% 0px -60% 0px',threshold:0})
@@ -362,19 +367,31 @@ export default function ComponentsPage() {
     return ()=>obs.disconnect()
   },[])
 
-  useEffect(()=>{
-    const fn=()=>setShowTop(window.scrollY>300)
-    window.addEventListener('scroll',fn,{passive:true})
-    return ()=>window.removeEventListener('scroll',fn)
-  },[])
-
   return (
-    <div className="app-layout">
+    <div className="app-layout" data-theme={theme}>
       <button className={`hamburger${sidebarOpen?' open':''}`} onClick={()=>setSidebarOpen(!sidebarOpen)}><span/><span/><span/></button>
-      <button className={`scroll-top-btn${showTop?' visible':''}`} onClick={scrollToTop} aria-label="Scroll to top">↑</button>
       <aside className={`sidebar${sidebarOpen?' open':''}`}>
         <div className="sidebar-logo">ZINE<span>—</span>CORE</div>
         <div className="sidebar-tagline">Component Library</div>
+        
+        <button 
+          onClick={toggleTheme} 
+          className="zn-btn" 
+          style={{ 
+            width: '100%', 
+            fontSize: '0.65rem', 
+            marginBottom: '1rem',
+            padding: '0.5rem',
+            background: theme === 'light' ? 'var(--near-black)' : 'var(--acid-yellow)',
+            color: theme === 'light' ? 'var(--off-white)' : 'var(--near-black)',
+            transform: 'rotate(-1deg)',
+            borderRadius: '0',
+            boxShadow: theme === 'light' ? '3px 3px 0 var(--flat-cobalt)' : '3px 3px 0 var(--electric-coral)'
+          }}
+        >
+          {theme === 'light' ? '☾ DARK MODE' : '☼ LIGHT MODE'}
+        </button>
+
         <ul className="sidebar-nav">
           {NAV_ITEMS.map(item=>(
             <li key={item.id}>
@@ -393,7 +410,7 @@ export default function ComponentsPage() {
         <InputsSection/>
         <BadgesSection/>
         <CardsSection/>
-        <ToggleSection/>
+        <ToggleSection theme={theme} toggleTheme={toggleTheme}/>
         <AlertsSection/>
         <ModalSection/>
         <AccordionSection/>
